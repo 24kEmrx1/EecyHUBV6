@@ -1,5 +1,5 @@
-local EecyHUB1740155766 = {};
-local DRAG_GUI = true
+EecyHUB1740155766 = {};
+DRAG_GUI = true
 EecyHUB1740155766["1"] = Instance.new("ScreenGui", game:GetService("CoreGui").RobloxGui);
 EecyHUB1740155766["1"]["Name"] = [[EecyHUB]];
 EecyHUB1740155766["1"]["ResetOnSpawn"] = false
@@ -322,7 +322,7 @@ local animTrack1 = animator:LoadAnimation(animation1)
 local animTrack2 = animator:LoadAnimation(animation2)
 local function getWaitTime()
 local AnimSpeed = script.Configuration.Speed.Value
-return math.max(0.01, 0.05 / AnimSpeed)end
+return math.max(0.02,0.2/AnimSpeed);end
 local function startAnimation()
 local speaker = game.Players.LocalPlayer
 local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
@@ -354,10 +354,9 @@ local anim = Instance.new("Animation")
 anim.AnimationId = not isR15 and "rbxassetid://72042024" or "rbxassetid://698251653"
 track = humanoid:LoadAnimation(anim)end
 track:Play()
-track:AdjustSpeed(isR15 and 0.65 or 0.65)
+track:AdjustSpeed(isR15 and 0.8 or 0.65)
 track.TimePosition = 0.6
-task.wait(0.1)
-while track and track.TimePosition < (not isR15 and 0.65 or 0.75) do 
+while track and track.TimePosition < (not isR15 and 0.65 or 0.825) do 
 task.wait(getWaitTime())end;
 if track then
 track:Stop()
@@ -366,14 +365,13 @@ local function removeTool()
 if backpack then
 local tool = backpack:FindFirstChild("Jerk Off") or char:FindFirstChild("Jerk Off")
 if tool then
-tool:Destroy()end;end;end;
-script.Parent.Main.Start.MouseButton1Click:Connect(startAnimation)
-script.Parent.Main.Stop.MouseButton1Click:Connect(removeTool)
-script.Parent.Main.Settings.R6.MouseButton1Click:Connect(function()
+tool:Destroy()end;end;end
+;script.Parent.Main.Start.MouseButton1Click:Connect(startAnimation)
+;script.Parent.Main.Stop.MouseButton1Click:Connect(removeTool)
+;script.Parent.Main.Settings.R6.MouseButton1Click:Connect(function()
 script.Parent.Main.Settings.R6.Stroke.Transparency = 0
-script.Parent.Main.Settings.R15.Stroke.Transparency = 1;end)
-script.Parent.Main.Settings.R15.MouseButton1Click:Connect(function()
+;script.Parent.Main.Settings.R15.Stroke.Transparency = 1;end)
+;script.Parent.Main.Settings.R15.MouseButton1Click:Connect(function()
 script.Parent.Main.Settings.R6.Stroke.Transparency = 1
-script.Parent.Main.Settings.R15.Stroke.Transparency = 0
-end)end;
-task.spawn(C_22);
+;script.Parent.Main.Settings.R15.Stroke.Transparency = 0
+end)end;task.spawn(C_22);
