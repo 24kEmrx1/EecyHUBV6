@@ -1,6 +1,6 @@
 EecyHUB1740155766 = {};
 DRAG_GUI = true
-EecyHUB1740155766["1"] = Instance.new("ScreenGui", game:GetService("CoreGui").RobloxGui);
+EecyHUB1740155766["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer.PlayerGui);
 EecyHUB1740155766["1"]["Name"] = [[EecyHUB]];
 EecyHUB1740155766["1"]["ResetOnSpawn"] = false
 EecyHUB1740155766["1"]["IgnoreGuiInset"] = true
@@ -185,7 +185,7 @@ EecyHUB1740155766["1b"]["BorderSizePixel"] = 0;
 EecyHUB1740155766["1b"]["BackgroundColor3"] = Color3.fromRGB(233, 4, 107);
 EecyHUB1740155766["1b"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
 EecyHUB1740155766["1b"]["Size"] = UDim2.new(3, 0, 3, 0);
-EecyHUB1740155766["1b"]["Position"] = UDim2.new(0, 0, 0.5, 0);
+EecyHUB1740155766["1b"]["Position"] = UDim2.new(1, 0, 0.5, 0);
 EecyHUB1740155766["1b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 EecyHUB1740155766["1b"]["Name"] = [[Dot]];
 EecyHUB1740155766["1c"] = Instance.new("UICorner", EecyHUB1740155766["1b"]);
@@ -198,7 +198,7 @@ EecyHUB1740155766["1e"]["Name"] = [[Percentage]];
 EecyHUB1740155766["1f"] = Instance.new("Frame", EecyHUB1740155766["19"]);
 EecyHUB1740155766["1f"]["BorderSizePixel"] = 0;
 EecyHUB1740155766["1f"]["BackgroundColor3"] = Color3.fromRGB(233, 4, 107);
-EecyHUB1740155766["1f"]["Size"] = UDim2.new(0, 0, 1, 0);
+EecyHUB1740155766["1f"]["Size"] = UDim2.new(1, 0, 1, 0);
 EecyHUB1740155766["1f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 EecyHUB1740155766["1f"]["Name"] = [[ProgressBar]];
 EecyHUB1740155766["20"] = Instance.new("TextLabel", EecyHUB1740155766["10"]);
@@ -213,7 +213,7 @@ EecyHUB1740155766["20"]["BackgroundTransparency"] = 1;
 EecyHUB1740155766["20"]["RichText"] = true;
 EecyHUB1740155766["20"]["Size"] = UDim2.new(0.96805, 0, 0.10385, 0);
 EecyHUB1740155766["20"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-EecyHUB1740155766["20"]["Text"] = [[Speed - 1]];
+EecyHUB1740155766["20"]["Text"] = [[Wait - 0]];
 EecyHUB1740155766["20"]["Name"] = [[Title1]];
 EecyHUB1740155766["20"]["Position"] = UDim2.new(0.03195, 0, 0.19263, 0);
 EecyHUB1740155766["21"] = Instance.new("TextLabel", EecyHUB1740155766["10"]);
@@ -235,7 +235,7 @@ EecyHUB1740155766["22"] = Instance.new("LocalScript", EecyHUB1740155766["4"]);
 EecyHUB1740155766["23"] = Instance.new("Configuration", EecyHUB1740155766["22"]);
 EecyHUB1740155766["24"] = Instance.new("NumberValue", EecyHUB1740155766["23"]);
 EecyHUB1740155766["24"]["Name"] = [[Speed]];
-EecyHUB1740155766["24"]["Value"] = 1;
+EecyHUB1740155766["24"]["Value"] = 0;
 EecyHUB1740155766["25"] = Instance.new("Configuration", EecyHUB1740155766["2"]);
 EecyHUB1740155766["26"] = Instance.new("IntValue", EecyHUB1740155766["25"]);
 EecyHUB1740155766["26"]["Name"] = [[Speed]];
@@ -247,15 +247,15 @@ local script = EecyHUB1740155766["1e"];
 local slider = script.Parent
 local sliderFrame = slider.Parent
 local progressBar = sliderFrame:FindFirstChild("ProgressBar")
-local min = 1
-local max = 100
+local min = 5
+local max = 0
 local function update(input)
 local relativePosition = math.clamp((input.Position.X - sliderFrame.AbsolutePosition.X) / sliderFrame.AbsoluteSize.X, 0, 1)
 local steppedValue = math.round(min + (max - min) * relativePosition)
 slider.Position = UDim2.new((steppedValue - min) / (max - min), 0, slider.Position.Y.Scale, 0)
 if progressBar then
 progressBar.Size = UDim2.new((steppedValue - min) / (max - min), 0, progressBar.Size.Y.Scale, 0)end
-script.Parent.Parent.Parent.Title1.Text = "Speed - " .. steppedValue
+script.Parent.Parent.Parent.Title1.Text = "Wait - " .. steppedValue
 script.Parent.Parent.Parent.Parent.Parent.LocalScript.Configuration.Speed.Value = steppedValue
 script.Parent.Parent.Parent.Parent.Parent.Parent.Configuration.Speed.Value = steppedValue;end
 slider.InputBegan:Connect(function(input)
@@ -268,9 +268,9 @@ update(moveInput)end;end)
 local releaseConnection
 releaseConnection = game:GetService("UserInputService").InputEnded:Connect(function(endInput)
 if endInput.UserInputType == Enum.UserInputType.MouseButton1 then
-DRAG_GUI = true
 moveConnection:Disconnect()
 releaseConnection:Disconnect()
+DRAG_GUI = true
 end;end)end;end)end;
 task.spawn(C_1e);
 local function Clloll()
@@ -286,10 +286,12 @@ local dragStart = nil
 local startPos = nil
 local dragPos = nil
 local function updateInput(input)
+if not DRAG_GUI then return end;
 local Delta = input.Position - dragStart
 local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
 game:GetService("TweenService"):Create(Frame, TweenInfo.new(dragSpeed,easingStyle,easingDirection), {Position = Position}):Play()end
 Frame.InputBegan:Connect(function(input)
+if not DRAG_GUI then return end;
 if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UIS:GetFocusedTextBox() == nil then
 dragToggle = true
 dragStart = input.Position
@@ -322,7 +324,7 @@ local animTrack1 = animator:LoadAnimation(animation1)
 local animTrack2 = animator:LoadAnimation(animation2)
 local function getWaitTime()
 local AnimSpeed = script.Configuration.Speed.Value
-return math.max(0.02,0.2/AnimSpeed);end
+return AnimSpeed;end
 local function startAnimation()
 local speaker = game.Players.LocalPlayer
 local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
@@ -354,9 +356,10 @@ local anim = Instance.new("Animation")
 anim.AnimationId = not isR15 and "rbxassetid://72042024" or "rbxassetid://698251653"
 track = humanoid:LoadAnimation(anim)end
 track:Play()
-track:AdjustSpeed(isR15 and 0.8 or 0.65)
-track.TimePosition = 0.6
-while track and track.TimePosition < (not isR15 and 0.65 or 0.825) do 
+track:AdjustSpeed(getWaitTime()<2 and 1.75 or isR15 and 0.8 or 0.65)
+track.TimePosition = getWaitTime()<2 and 0.65 or 0.6
+while track and track.TimePosition < (not isR15 and 0.65 or 0.825 or getWaitTime()<2 and 0.9) do 
+track:AdjustSpeed(getWaitTime()<=1.75 and getWaitTime() >1.9 and 1.6 or isR15 and 0.8 or 0.65)
 task.wait(getWaitTime())end;
 if track then
 track:Stop()
