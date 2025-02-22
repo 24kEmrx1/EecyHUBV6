@@ -1,6 +1,6 @@
 EecyHUB1740155766 = {};
 DRAG_GUI = true
-EecyHUB1740155766["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer.PlayerGui);
+EecyHUB1740155766["1"] = Instance.new("ScreenGui", game:GetService("CoreGui").RobloxGui);
 EecyHUB1740155766["1"]["Name"] = [[EecyHUB]];
 EecyHUB1740155766["1"]["ResetOnSpawn"] = false
 EecyHUB1740155766["1"]["IgnoreGuiInset"] = true
